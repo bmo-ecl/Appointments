@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Table from './Table';
+import moment from 'moment';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <div className="container">
-	      	<Table />
-	      </div>
-      </div>
-      
-      
-    );
-  }
+import ClienteMain from "./components/creation/ClienteMain";
+import Calendar from "./components/creation/Calendar";
+
+class App extends Component{
+
+
+	
+	render(){
+		return(
+				<div className="App">
+
+					<Calendar />
+				</div>
+		)
+	}
 }
 
 export default App;
