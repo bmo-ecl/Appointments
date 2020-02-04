@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import moment from 'moment';
+import moment from 'moment'; 
 
-import ClienteMain from "./components/ClienteMain";
-import Calendar from "./components/creation/Calendar";
+import ClienteMain from "./ClienteMain";
+import Calendar from "./components/Calendar";
+import AppNavbar from './AppNavbar';
+
 
 class App extends Component{
-
-
 	
 	render(){
 		return(
 				<div className="App">
-
-					<Calendar />
+					<div>
+						<AppNavbar />
+						<Calendar />
+					</div>
+					
 				</div>
 		)
 	}
