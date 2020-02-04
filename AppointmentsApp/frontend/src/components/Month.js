@@ -10,7 +10,7 @@ let CreateMonth = props =>{
 	
 	for(let i=0; i< firstDayOfMonth; i++){
 		daysBeforeMonth.push(
-				<td key={['lastmonth-'+ i]} className="calendar-day lastmonth">{""}</td>
+				<td key={['lastmonth-'+ i]} className="calendar-body-cell lastmonth">{""}</td>
 		);
 	}
 	
