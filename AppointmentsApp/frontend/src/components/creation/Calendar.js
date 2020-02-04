@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import './Calendar.css';
+import MonthTable from './MonthTable';
 import Month from './Month';
-
+import YearTable from './YearTable';
 
 
 
@@ -15,27 +16,13 @@ class Calendar extends Component{
 			dateObject: moment(),
 			allmonths: moment.months(),
 			showMonthTable:false,
+			showYearTable:false,
+			showDateTable:true,
+			selectedDate: moment(),
 	};
 	
-	days = moment.weekdays();
+	
 
-	firstDayOfMonth = () => {
-		let dateObject = this.state.dateObject;
-		let firstDay = moment(dateObject).startOf("month").format("d");
-		return firstDay;
-	}
-	
-	daysInMonth = () => {
-		let totalDaysInMonth = moment().daysInMonth();
-		let days = [];
-		while(totalDaysInMonth){
-			var current = moment().date(totalDaysInMonth).format("D");
-			days.push(current);
-			totalDaysInMonth--;
-		}
-		return days;
-	}
-	
 	currentDay = () =>{
 		return this.state.dateObject.format("D");
 	}
@@ -44,110 +31,143 @@ class Calendar extends Component{
 		return this.state.dateObject.format("MMMM");
 	}
 	
+	year = () => {    
+	   return this.state.dateObject.format("Y");
+	};
 	
 	setMonth = month =>{
 		let monthNo = this.state.allmonths.indexOf(month);// get month number 
 	    let dateObject = Object.assign({}, this.state.dateObject);
 	    dateObject = moment(dateObject).set("month", monthNo); // change month value
 	    this.setState({
-	      dateObject: dateObject // add to state
+	      dateObject: dateObject,
+	      showMonthTable: false,
+	      showDateTable: true,
+	      showYearTable: false
 	    });
 	}
+	
+	setYear = year =>{
+		let dateObject = Object.assign({}, this.state.dateObject);
+	    dateObject = moment(dateObject).set("year", year);
+	    this.setState({
+	      dateObject: dateObject,
+	      showMonthTable: false,
+	      showDateTable: true,
+	      showYearTable: false
+	    });
+	}
+	
+	showMonthTable = (e, month) =>{
+		this.setState({
+			showMonthTable: !this.state.showMonthTable,
+		    showDateTable: this.state.showMonthTable,
+		    showYearTable: false
+			
+		});
+	};
+	
+	showYearTable = (e, year) =>{
+		this.setState({
+			showMonthTable: false,
+		    showDateTable: this.state.showYearTable,
+		    showYearTable: !this.state.showYearTable
+		});
+	};
+	
+	
+	getDates = (startDate, stopDate) =>{
+	    var dateArray = [];
+	    var currentDate = moment(startDate);
+	    var stopDate = moment(stopDate);
+	    while (currentDate <= stopDate) {
+	      dateArray.push(moment(currentDate).format("YYYY"));
+	      currentDate = moment(currentDate).add(1, "year");
+	    }
+	    return dateArray;
+	  }
+	
+	
+	onPrev = () => {
+	    let curr = "";
+	    if (this.state.showYearTable == true) {
+	      curr = "year";
+	    } else {
+	      curr = "month";
+	    }
+	    this.setState({
+	      dateObject: this.state.dateObject.subtract(1, curr)
+	    });
+	  };
+	onNext = () => {
+	    let curr = "";
+	    if (this.state.showYearTable == true) {
+	      curr = "year";
+	    } else {
+	      curr = "month";
+	    }
+	    this.setState({
+	      dateObject: this.state.dateObject.add(1, curr)
+	    });
+	  };
+	  
+	  
+	  
+	  selectDay = (day) =>{
+		  this.setState({
+			  selectedDate: day,
+		  });
+	  }
+	
+	
 
 	render(){
 		
-		let daysNameDisplay = this.days.map(dayname =>{
-			return (
-					<th key={dayname} className="days-display">
-						{dayname}
-					</th>
-			);
-		});
-		
-		let daysBeforeMonth = [];
-		for(let i=0; i< this.firstDayOfMonth(); i++){
-			daysBeforeMonth.push(
-					<td key={['lastmonth-'+ i]} className="calendar-day lastmonth">{""}</td>
-			);
-		}
-		
-		let daysThisMonth = [];
-		for(let d=1; d<= this.daysInMonth().length; d++){
-			console.log(d);
-			console.log(this.currentDay());
-			let currentDay = d == this.currentDay()?"today":"";
-			console.log(currentDay);
-			daysThisMonth.push(
-					<td key={['thismonth-'+ d]} className={'date '  + currentDay}>
-					{d}
-					</td>
-			);
-		}
 
-		
-		
-		
-		var totalSlots = [...daysBeforeMonth, ...daysThisMonth];
-		let rows =[];
-		let cells = [];
-		
-		totalSlots.forEach((row,i) =>{
-			if(i % 7 !== 0){
-				cells.push(row);
-			}else{
-				rows.push(cells);
-				cells = [];
-				cells.push(row);
-			}
-			
-			if(i=== totalSlots.length -1){  // when end loop we add remain date
-				rows.push(cells);
-			}
-		});
-		
-		console.log(rows);
-		
-		let daysinmonth = rows.map((days, index) =>{
-			return (
-					<tr key={index} className="calendar-month-row">
-					{days}
-					</tr>
-				);
-		});
-
-		
 		return(
 			<div>
 				<h2>Calendar</h2>
 				
-				<div className="">
-					<div className="tail-datetime-calendar">
-						<div className="calendar-navi">
-							{this.month()}
+				<div className="calendar-container">
+				
+					<div className="calendar-header">
+						<div className="calendar-header-content">
+							<span onClick={e => {
+						           this.onPrev();
+					        		}}>Prev
+					        </span>
+			        		
+							<div className="month-header" onClick={e=> {this.showMonthTable();}}>
+								{this.month()}
+							</div>
+							<div className="year-header" onClick={e=> {this.showYearTable();}}>
+								{this.year()}
+							</div>
+							<span onClick={e => {
+						           this.onNext();
+					        		}}>Next
+					        </span>
 						</div>
 					</div>
-					<div className="calendar-date">
+					
+					<div className="calendar-pick">
 						{
-							this.state.showMonthTable &&
-							<Month data={this.state.allmonths} setMonth={this.setMonth} />
+							this.state.showYearTable && 
+							<YearTable currentyear={this.year()} getdates={this.getDates} setYear={this.setYear} />
+						}
+						{
+							this.state.showMonthTable && 
+							<MonthTable data={this.state.allmonths} setMonth={this.setMonth} />
 						}
 					</div>
 					
-					<div className="calendar-content">
-						<table>
-							<thead>
-								<tr>{daysNameDisplay}</tr>
-							</thead>
-							<tbody>
-								{daysinmonth}
-							</tbody>
-						</table>
+					<div className="calendar-body">
+						{ this.state.showDateTable && (
+							<Month current={this.state.dateObject} />
+						)}	
 					</div>
 				</div>
 					
-				
-				
-				
 			</div>
 		)} 
 }
