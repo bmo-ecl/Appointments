@@ -77,7 +77,6 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Surge](#surge)
 - [Advanced Configuration](#advanced-configuration)
 - [Troubleshooting](#troubleshooting)
-  - [`npm start` doesn’t detect changes](#npm-start-doesnt-detect-changes)
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
   - [`npm run build` silently fails](#npm-run-build-silently-fails)
   - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)

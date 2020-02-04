@@ -1,4 +1,4 @@
-package com.bmo.appoitnments.beans;
+package com.bmo.appointments.beans;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,29 +11,29 @@ public class Appointment {
 	private Person person;
 	
 	
-	public Service getService() {
-		return service;
-	}
-	public void setService(Service service) {
-		this.service = service;
-	}
-	public LocalTime getTime() {
-		return time;
-	}
-	public void setTime(LocalTime time) {
-		this.time = time;
-	}
 	public LocalDate getDate() {
 		return date;
-	}
-	public void setDate(LocalDate date) {
-		this.date = date;
 	}
 	public Person getPerson() {
 		return person;
 	}
+	public Service getService() {
+		return service;
+	}
+	public LocalTime getTime() {
+		return time;
+	}
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+	public void setService(Service service) {
+		this.service = service;
+	}
+	public void setTime(LocalTime time) {
+		this.time = time;
 	}
 	
 }
