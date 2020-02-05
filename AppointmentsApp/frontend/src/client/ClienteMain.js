@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
-import calendarpic from './images/calendar_example.png';
-import AppNavbar from './AppNavbar';
-
-import './App.css'
-
-
-
+import './Client.css'
+import ClientList from './ClientList';
 
 
 class ClienteMain extends Component{
@@ -14,6 +9,7 @@ class ClienteMain extends Component{
 		super(props);
 		this.state ={
 				clientlist : [],
+				isLoading:true,
 				aboutcontentStyle : {
 						height: (window.innerHeight - 150),
 				}
@@ -30,15 +26,20 @@ class ClienteMain extends Component{
 	async componentDidMount(){
 		const response = await fetch('/api/clients');
 		const clientlist_updated = await response.json(); 
-		this.setState({ clientlist: clientlist_updated});
+		this.setState({ clientlist: clientlist_updated, isLoading:false});
 		this.updateDimensions();
 		window.addEventListener("resize", this.updateDimensions.bind(this));
+		
+		
+	
 	}
+	
 	
 	componentWillUnmount() {
 	    window.removeEventListener("resize", this.updateDimensions.bind(this));
 	  }
 
+	
 	
 	
 	render(){
@@ -55,19 +56,7 @@ class ClienteMain extends Component{
 				<div className="about-container" >
 					<div className="about-content" style={this.state.aboutcontentStyle}>
 						<div className="about a-left">
-							<div className="service-filter">
-								<h3>Busca tu centro de servicio</h3>
-								<div>
-									<input type="text" className="service-input" />
-								</div>
-								<div>
-									<ul className="service-ul">
-										<li className="service-li">Clinica Mapfre</li>
-										<li className="service-li">Peluqueria Montalvo</li>
-										<li className="service-li">Stephies Grooming</li>
-									</ul>
-								</div>	
-							</div>
+							<ClientList clientlist={this.state.clientlist} isLoading={this.state.isLoading} />
 						</div>
 						<div className="about a-right">
 							<div className="calendar-pic"></div>
