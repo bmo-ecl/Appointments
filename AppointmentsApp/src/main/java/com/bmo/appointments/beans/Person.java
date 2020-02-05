@@ -1,4 +1,4 @@
-package com.bmo.appoitnments.beans;
+package com.bmo.appointments.beans;
 
 public class Person {
 	
@@ -7,23 +7,23 @@ public class Person {
 	private String personDni;
 	
 	
+	public String getPersonDni() {
+		return personDni;
+	}
 	public String getPersonName() {
 		return personName;
-	}
-	public void setPersonName(String personName) {
-		this.personName = personName;
 	}
 	public String getPersonPhone() {
 		return personPhone;
 	}
-	public void setPersonPhone(String personPhone) {
-		this.personPhone = personPhone;
-	}
-	public String getPersonDni() {
-		return personDni;
-	}
 	public void setPersonDni(String personDni) {
 		this.personDni = personDni;
+	}
+	public void setPersonName(String personName) {
+		this.personName = personName;
+	}
+	public void setPersonPhone(String personPhone) {
+		this.personPhone = personPhone;
 	}
 
 }
