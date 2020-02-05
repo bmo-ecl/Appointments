@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {ReactSelectize, SimpleSelect} from 'react-selectize';
 
 
 class ClientList extends Component{
@@ -7,16 +8,14 @@ class ClientList extends Component{
 		this.state ={
 				list :[],
 				filtered:[],
-				isLoading: true
+				isLoading: true,
+				selectedClientName: null,
 		};
 		
 		this.clientSearchInput = this.clientSearchInput.bind(this);
 	}
 	
 	
-
-
-
 	componentDidMount(){
 		this.setState({filtered:this.props.clientlist});
 	}
@@ -60,6 +59,10 @@ class ClientList extends Component{
 
 	}
 	
+	selectClient = (client)=>{
+		this.setState({selectedClientName: client.clientName});
+	}
+	
 	
 	render(){
 		let clientList = this.state.filtered.map(client=>{
@@ -69,8 +72,7 @@ class ClientList extends Component{
 				)
 			}else{
 				return(
-						<li key={client.id} className="client-li" onClick={()=> this.selectClient(client)} >
-						{client.clientName}</li>
+						<option key={client.id} value={client.id} >{client.clientName}</option>
 				)
 			}
 		});
@@ -79,10 +81,10 @@ class ClientList extends Component{
 				<div className="client-filter">
 					<h3>Busca tu centro de servicio</h3>
 					<div style={{display:"inline-block"}}>
-						<input type="text" className="client-input" onChange={this.clientSearchInput} />
+						<SimpleSelect placeholder="Seleccione un Centro" tethered="true" theme="material" >{clientList}</SimpleSelect>
 						<button className="client-enter">ingresar</button>
-					</div>
-					<div><ul className="client-ul">{clientList}</ul></div>	
+					</div> 
+					
 				</div>
 				
 		)
