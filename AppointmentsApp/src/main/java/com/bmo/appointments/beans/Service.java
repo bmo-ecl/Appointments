@@ -5,8 +5,12 @@ import java.sql.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -20,6 +24,12 @@ public class Service {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	 @ManyToOne(fetch = FetchType.LAZY, optional = false)
+	 @JoinColumn(name = "clientId", nullable = false)
+	 @OnDelete(action = OnDeleteAction.CASCADE)
+	 @JsonIgnore
+	private Client client;
 	
 	
 	@NotBlank
@@ -70,5 +80,9 @@ public class Service {
 		this.serviceName = serviceName;
 	}
 	
-
+	public Client getClient() {
+		return client;
+	}
+	
+	
 }
