@@ -27,10 +27,9 @@ class ClienteMain extends Component{
 		const response = await fetch('/api/clients');
 		const clientlist_updated = await response.json(); 
 		this.setState({ clientlist: clientlist_updated, isLoading:false});
+		
 		this.updateDimensions();
 		window.addEventListener("resize", this.updateDimensions.bind(this));
-		
-		
 	
 	}
 	

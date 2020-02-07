@@ -1,36 +1,41 @@
 import React, {Component} from 'react';
 import {ReactSelectize, SimpleSelect} from 'react-selectize';
+import ServiceList from './ServiceList';
  
 class ClientList extends Component{
 	constructor(props){
 		super(props);
 		this.state ={
-				selected: 0,
+				clientid: 0,
+				servicelist:[],
+				isLoading:true,
 		};
 		
 		this.selectClient = this.selectClient.bind(this);
 	}
 	
 	
-	selectClient = (client)=>{
+	async selectClient (client){
 		if(client === undefined){
-			this.setState({selected: 0});
+			
+			this.setState({clientid: 0, servicelist: [], isLoading:false});
 		}else{
-			this.setState({selected: client.value});
+			
+			let id = client.value;
+			const response = await fetch('/api/clients/' + id + '/services');
+			const list = await response.json();
+			this.setState({clientid: id, servicelist: list, isLoading:false});
+			
 		}
-		
 	}
 	
-	canBeSubmitted() {
-	    const {selected} = this.state;
-	    return selected != 0;
-	  }
+	
 	
 	
 	render(){
-		const isEnabled = this.canBeSubmitted();
 		
-		let clientList = this.props.clientlist.map(client=>{
+		
+		const clientList = this.props.clientlist.map(client=>{
 			if(this.props.isLoading){
 				return(
 						<div>... loading...</div>
@@ -42,6 +47,8 @@ class ClientList extends Component{
 			}
 		});
 		
+		const {clientid, servicelist, isLoading} = this.state;
+		
 		return(
 				<div className="client-filter">
 					<h3>Busca tu centro de servicio</h3>
@@ -49,9 +56,9 @@ class ClientList extends Component{
 						<SimpleSelect placeholder="Seleccione un Centro" tethered="true" theme="material"  
 						onValueChange={value => this.selectClient(value)} >
 							{clientList}</SimpleSelect>
-						<button disabled={!isEnabled} className="client-enter">ingresar</button>
+						
 					</div> 
-					
+					<ServiceList clientid={clientid} servicelist={servicelist} isLoading={isLoading} />
 				</div>
 				
 		)
