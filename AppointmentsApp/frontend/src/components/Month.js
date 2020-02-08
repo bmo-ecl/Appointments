@@ -4,8 +4,7 @@ import moment from 'moment';
 
 let CreateMonth = props =>{
 	let currentDate = moment(props.current.current);
-	console.log(currentDate);
-	
+
 	let firstDayOfMonth = moment(currentDate).startOf("month").format("d");
 	
 	let daysBeforeMonth = [];
@@ -27,11 +26,10 @@ let CreateMonth = props =>{
 	
 
 	let currentDay = props.current.current.format("D");
-	console.log(currentDay);
 
 	let daysThisMonth = [];
 	for(let d=1; d<= days.length; d++){
-		let currentday = d === currentDay?"today":"";
+		let currentday = d == currentDay?"today":"";
 		daysThisMonth.push(
 				<td key={['thismonth-'+ d]} className={'calendar-body-cell '  + currentday} onClick={() => props.selectDay(d)} >
 					<div className="date">{d}</div>

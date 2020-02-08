@@ -271,3 +271,22 @@ body {
     width: 90px !important;
 }
 
+.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+   
+    width: 3.7rem !important;
+    line-height: 2.7rem !important;
+   
+}
+
+.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range, .react-datepicker__month-text--selected, .react-datepicker__month-text--in-selecting-range, .react-datepicker__month-text--in-range, .react-datepicker__quarter-text--selected, .react-datepicker__quarter-text--in-selecting-range, .react-datepicker__quarter-text--in-range {
+   background-color: #229688 !important;
+}
+
+.react-datepicker__header {
+    background-color: #229688 !important;
+    
+}
+
+.react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header {
+   color: white !important;
+}

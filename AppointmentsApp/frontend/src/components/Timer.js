@@ -16,7 +16,13 @@ class Timer extends Component{
 		this.props.setTime(moment(time));
 	}
 	
+	setHours(hours){
+		
+	}
 	
+	setMinutes(){
+		
+	}
 	render(){
 		
 		return(
@@ -29,6 +35,8 @@ class Timer extends Component{
 				      showTimeSelectOnly
 				      timeIntervals={15}
 				      timeCaption="Time"
+				          minTime={new Date()}
+					maxTime={new Date().setHours(20, 0, 0)}
 				      dateFormat="h:mm aa" />
 				     </div>
 				</div>

@@ -27,7 +27,6 @@ const EnterButton = props => {
 
 
 
-
 class ClientList extends Component{
 	constructor(props){
 		super(props);
@@ -52,7 +51,7 @@ class ClientList extends Component{
 			const response = await fetch('/api/clients/' + id + '/services');
 			const list = await response.json();
 			
-			if(list.length !== 0 && list.content[0]["standard"] === 1){
+			if(list.length != 0 && list.content[0]["standard"] == 1){
 				this.setState({clientid: id, servicelist: list, isLoading:false, serviceid:list.content[0]["id"]});
 			}else{
 				this.setState({clientid: id, servicelist: list, isLoading:false, serviceid:0});
@@ -64,7 +63,7 @@ class ClientList extends Component{
 	
 	
 	selectService =(service) => {
-		if(service === undefined){
+		if(service ===  undefined){
 			this.setState({serviceid: 0});
 		}else{
 			

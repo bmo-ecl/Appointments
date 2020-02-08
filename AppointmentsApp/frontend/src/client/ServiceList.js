@@ -8,7 +8,7 @@ class ServiceList extends Component {
 		
 		var general = false;
 	
-		if(this.props.servicelist.length !== 0 && this.props.servicelist.empty === false){
+		if(this.props.servicelist.length !=  0 && this.props.servicelist.empty == false){
 			 const services  = this.props.servicelist.content.map(service=>{
 				if(this.props.isLoading){
 					return(
@@ -17,7 +17,7 @@ class ServiceList extends Component {
 				}
 				else{
 					
-					if(service.standard===1){
+					if(service.standard == 1){
 						general = true;
 					}
 					
@@ -27,10 +27,10 @@ class ServiceList extends Component {
 				}
 			});
 			 
-			if(general === false){
+			if(general == false){
 				return(
 						<div style={{display:"table-row"}}>
-							<SimpleSelect placeholder="Seleccione un Servicio" tethered="true" theme="material"  
+							<SimpleSelect placeholder="Seleccione un Servicio" tethered="true" theme="material" clearable="true" 
 								onValueChange={value => this.props.selectService(value)} >
 									{services}</SimpleSelect>
 						</div> 

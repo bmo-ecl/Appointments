@@ -17,29 +17,15 @@ class ClientChoose extends Component{
 		
 	}
 	
-	updateDimensions(){
-		let aboutcontentStyle_updated = { height: (window.innerHeight - document.getElementById('h1-holder').clientHeight - 50)};
-		this.setState({aboutcontentSyle : aboutcontentStyle_updated});
-	}
-	
-	
 	async componentDidMount(){
 		const response = await fetch('/api/clients');
 		const clientlist_updated = await response.json(); 
 		this.setState({ clientlist: clientlist_updated, isLoading:false});
-		
-		this.updateDimensions();
-		window.addEventListener("resize", this.updateDimensions.bind(this));
-	
+
 	}
 	
 	
-	componentWillUnmount() {
-	    window.removeEventListener("resize", this.updateDimensions.bind(this));
-	  }
 
-	
-	
 	
 	render(){
 		
