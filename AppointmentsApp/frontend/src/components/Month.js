@@ -3,8 +3,10 @@ import moment from 'moment';
 
 
 let CreateMonth = props =>{
-
-	let firstDayOfMonth = moment(props.current).startOf("month").format("d");
+	let currentDate = moment(props.current.current);
+	console.log(currentDate);
+	
+	let firstDayOfMonth = moment(currentDate).startOf("month").format("d");
 	
 	let daysBeforeMonth = [];
 	
@@ -14,22 +16,24 @@ let CreateMonth = props =>{
 		);
 	}
 	
-
-	let totalDaysInMonth = props.current.daysInMonth();
+	
+	let totalDaysInMonth = currentDate.daysInMonth();
 	let days = [];
 	while(totalDaysInMonth){
-		var current = props.current.date(totalDaysInMonth).format("D");
+		var current = currentDate.date(totalDaysInMonth).format("D");
 		days.push(current);
 		totalDaysInMonth--;
 	}
+	
 
-	let currentDay = moment().format("D");
+	let currentDay = props.current.current.format("D");
+	console.log(currentDay);
 
 	let daysThisMonth = [];
 	for(let d=1; d<= days.length; d++){
-		let currentday = d == currentDay?"today":"";
+		let currentday = d === currentDay?"today":"";
 		daysThisMonth.push(
-				<td key={['thismonth-'+ d]} className={'calendar-body-cell '  + currentday}>
+				<td key={['thismonth-'+ d]} className={'calendar-body-cell '  + currentday} onClick={() => props.selectDay(d)} >
 					<div className="date">{d}</div>
 				</td>
 		);
@@ -77,10 +81,9 @@ class Month extends Component{
 
 	days = moment.weekdays();
 	
-
+	
 	render(){
-		
-		const {current} = this.props;
+
 		console.log(this.props);
 		
 		let daysNameDisplay = this.days.map(dayname =>{
@@ -98,7 +101,7 @@ class Month extends Component{
 						<tr>{daysNameDisplay}</tr>
 					</thead>
 					
-					<CreateMonth current={current} />
+					<CreateMonth current={this.props} selectDay={this.props.selectDay} />
 					
 				</table>
 			

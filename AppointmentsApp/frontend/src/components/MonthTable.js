@@ -1,7 +1,4 @@
-import React, {Component} from 'react'
-import moment from 'moment';
-
-
+import React from 'react'
 	
 let MonthTable = props =>{
 		let months = [];
@@ -18,7 +15,7 @@ let MonthTable = props =>{
 		let cells = [];
 		
 		months.forEach((row, i) => { 
-			   if (i % 3 !== 0 || i == 0) { // except zero index 
+			   if (i % 3 !== 0 || i === 0) { // except zero index 
 			       cells.push(row); 
 			   } else { 
 			       rows.push(cells); 

@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import moment from 'moment'; 
-
 import ClienteMain from "./client/ClienteMain";
-import Calendar from "./components/Calendar";
 import './App.css';
 
 

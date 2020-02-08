@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import './Calendar.css';
 import MonthTable from './MonthTable';
 import Month from './Month';
 import YearTable from './YearTable';
@@ -18,7 +17,7 @@ class Calendar extends Component{
 			showMonthTable:false,
 			showYearTable:false,
 			showDateTable:true,
-			selectedDate: moment(),
+
 	};
 	
 	
@@ -35,7 +34,7 @@ class Calendar extends Component{
 	   return this.state.dateObject.format("Y");
 	};
 	
-	setMonth = month =>{
+	setMonth(month){
 		let monthNo = this.state.allmonths.indexOf(month);// get month number 
 	    let dateObject = Object.assign({}, this.state.dateObject);
 	    dateObject = moment(dateObject).set("month", monthNo); // change month value
@@ -45,9 +44,11 @@ class Calendar extends Component{
 	      showDateTable: true,
 	      showYearTable: false
 	    });
+	    
+	    this.props.setDate(dateObject);  
 	}
 	
-	setYear = year =>{
+	setYear(year){
 		let dateObject = Object.assign({}, this.state.dateObject);
 	    dateObject = moment(dateObject).set("year", year);
 	    this.setState({
@@ -56,7 +57,18 @@ class Calendar extends Component{
 	      showDateTable: true,
 	      showYearTable: false
 	    });
+	    
+	    this.props.setDate(dateObject);
 	}
+	
+	 selectDay = (day) =>{
+		  let dateObject = Object.assign({}, this.state.dateObject);
+		    dateObject = moment(dateObject).set("date", day);
+		  this.setState({
+			  dateObject: dateObject,
+		  });
+		  this.props.setDate(dateObject);
+	  }
 	
 	showMonthTable = (e, month) =>{
 		this.setState({
@@ -90,7 +102,7 @@ class Calendar extends Component{
 	
 	onPrev = () => {
 	    let curr = "";
-	    if (this.state.showYearTable == true) {
+	    if (this.state.showYearTable === true) {
 	      curr = "year";
 	    } else {
 	      curr = "month";
@@ -98,10 +110,11 @@ class Calendar extends Component{
 	    this.setState({
 	      dateObject: this.state.dateObject.subtract(1, curr)
 	    });
+	    this.props.setDate(this.state.dateObject);
 	  };
 	onNext = () => {
 	    let curr = "";
-	    if (this.state.showYearTable == true) {
+	    if (this.state.showYearTable === true) {
 	      curr = "year";
 	    } else {
 	      curr = "month";
@@ -109,15 +122,12 @@ class Calendar extends Component{
 	    this.setState({
 	      dateObject: this.state.dateObject.add(1, curr)
 	    });
+	    this.props.setDate(this.state.dateObject);
 	  };
 	  
 	  
 	  
-	  selectDay = (day) =>{
-		  this.setState({
-			  selectedDate: day,
-		  });
-	  }
+	 
 	
 	
 
@@ -125,9 +135,7 @@ class Calendar extends Component{
 		
 
 		return(
-			<div>
-				<h2>Calendar</h2>
-				
+
 				<div className="calendar-container">
 				
 					<div className="calendar-header">
@@ -163,12 +171,11 @@ class Calendar extends Component{
 					
 					<div className="calendar-body">
 						{ this.state.showDateTable && (
-							<Month current={this.state.dateObject} />
+							<Month current={this.state.dateObject} selectDay={this.selectDay} />
 						)}	
 					</div>
 				</div>
-					
-			</div>
+
 		)} 
 }
 

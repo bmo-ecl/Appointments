@@ -14,6 +14,7 @@ import com.bmo.appointments.beans.Client;
 import com.bmo.appointments.beans.Service;
 import com.bmo.appointments.repositories.ServiceRepository;
 
+
 @RestController
 @RequestMapping("/api")
 public class ServiceController {
@@ -22,12 +23,23 @@ public class ServiceController {
 	ServiceRepository serviceRep;
 	
 	
-	//Get Services by ClientId
+	//Get Services by ClientId No Default
 	@GetMapping("/clients/{clientId}/services")
 	public Page<Service> getServicesByClientId(@PathVariable(value ="clientId") Long clientId, Pageable pageable){
-		Page<Service> l = serviceRep.findByClientId(clientId, pageable);
 		
-		return serviceRep.findByClientId(clientId, pageable);
+		
+		Page<Service> services = null;
+		Page<Service> servicesNotDefault = serviceRep.findByClientIdNotDefault(clientId, pageable);
+		if(servicesNotDefault.isEmpty()) {
+			Page<Service> servicesDefault = serviceRep.findByClientIdDefault(clientId, pageable);
+			services = servicesDefault;
+		}else {
+			services = servicesNotDefault;
+		}
+		
+		return services;
 	}
+	
+
 
 }

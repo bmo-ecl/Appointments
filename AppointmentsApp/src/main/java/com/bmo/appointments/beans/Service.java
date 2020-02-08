@@ -49,7 +49,24 @@ public class Service {
 	
 	@NotBlank
 	private Short estado;
+	
+	@NotBlank
+	private Short standard;
 
+	
+	
+	
+	
+	
+	
+	//*************************** Getters and Setters *****************************************
+	
+	public Short getStandard() {
+		return standard;
+	}
+	public void setStandard(Short standard) {
+		this.standard = standard;
+	}
 	public Date getCreatedAt() {
 		return createdAt;
 	}
