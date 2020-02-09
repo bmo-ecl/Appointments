@@ -34,7 +34,7 @@ public class Service {
 	
 	
 	@NotBlank
-	private String serviceName;
+	private String name;
 	
 	@Column(nullable = false, updatable = false)
     //@Temporal(TemporalType.TIMESTAMP)
@@ -54,53 +54,70 @@ public class Service {
 	private Short standard;
 
 	
-	
-	
-	
-	
-	
+
 	//*************************** Getters and Setters *****************************************
 	
-	public Short getStandard() {
-		return standard;
-	}
-	public void setStandard(Short standard) {
-		this.standard = standard;
-	}
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-	public Short getEstado() {
-		return estado;
-	}
-	
-		
 	public Long getId() {
 		return id;
 	}
-	
-	public Date getModifiedAt() {
-		return modifiedAt;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
-	public String getServiceName() {
-		return serviceName;
-	}
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-	public void setEstado(Short estado) {
-		this.estado = estado;
-	}
-	public void setModifiedAt(Date modifiedAt) {
-		this.modifiedAt = modifiedAt;
-	}
-	public void setServiceName(String serviceName) {
-		this.serviceName = serviceName;
-	}
-	
+
 	public Client getClient() {
 		return client;
 	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getModifiedAt() {
+		return modifiedAt;
+	}
+
+	public void setModifiedAt(Date modifiedAt) {
+		this.modifiedAt = modifiedAt;
+	}
+
+	public Short getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Short estado) {
+		this.estado = estado;
+	}
+
+	public Short getStandard() {
+		return standard;
+	}
+
+	public void setStandard(Short standard) {
+		this.standard = standard;
+	}
+
+
+	
+	
+
+
 	
 	
 }

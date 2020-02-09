@@ -1,6 +1,7 @@
 package com.bmo.appointments.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,11 @@ public class ServiceController {
 	@Autowired
 	ServiceRepository serviceRep;
 	
+	@GetMapping("/services/{serviceId}")
+	Optional<Service>findByServiceId(@PathVariable Long serviceId) {
+		System.out.println("inside servicecontroller");
+		return serviceRep.findById(serviceId);
+	}
 	
 	//Get Services by ClientId No Default
 	@GetMapping("/clients/{clientId}/services")

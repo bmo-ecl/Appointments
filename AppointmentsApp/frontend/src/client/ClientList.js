@@ -11,7 +11,7 @@ const EnterButton = props => {
 	if(isEnabled){
 		return(
 				<button disabled={!isEnabled} className="appointments-enter">
-					<Link to="/serviceappts">ingresar</Link>
+					<Link to={{pathname: "/serviceappts/" + props.selected, state:{serviceid: props.selected}}}>ingresar</Link>
 				</button>	
 		);
 	}else{
@@ -86,7 +86,7 @@ class ClientList extends Component{
 				)
 			}else{
 				return( 
-						<option key={client.id} value={client.id} >{client.clientName}</option>
+						<option key={client.id} value={client.id} >{client.name}</option>
 				)
 			}
 		});

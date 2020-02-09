@@ -22,7 +22,7 @@ class ServiceList extends Component {
 					}
 					
 					return( 
-							<option key={service.id} value={service.id} >{service.serviceName}</option>
+							<option key={service.id} value={service.id} >{service.name}</option>
 					)
 				}
 			});
