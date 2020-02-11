@@ -40,6 +40,11 @@ public class PersonController {
 		return personRep.findByServiceIdAndDni(serviceId, dni);
 	}
 	
+	@GetMapping("/persons/{id}")
+	public Optional<Person> findById(@PathVariable(value="id") Long id) {
+		return personRep.findById(id);
+	}
+	
 	
 	@GetMapping("/persons")
 	@ResponseBody

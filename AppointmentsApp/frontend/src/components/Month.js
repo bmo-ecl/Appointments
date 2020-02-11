@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
 import moment from 'moment';
+import ApptsByDay from './ApptsByDay';
+
+
 
 
 let CreateMonth = props =>{
+	let serviceid = props.current.serviceid;
+	let personid = props.current.personid;
 	let currentDate = moment(props.current.current);
 
 	let firstDayOfMonth = moment(currentDate).startOf("month").format("d");
@@ -14,13 +19,14 @@ let CreateMonth = props =>{
 				<td key={['lastmonth-'+ i]} className="calendar-body-cell lastmonth">{""}</td>
 		);
 	}
-	
+
 	
 	let totalDaysInMonth = currentDate.daysInMonth();
 	let days = [];
 	while(totalDaysInMonth){
+
 		var current = currentDate.date(totalDaysInMonth).format("D");
-		days.push(current);
+		days.push({day: current, date: moment(currentDate).format("YYYY-MM-DD")});
 		totalDaysInMonth--;
 	}
 	
@@ -28,11 +34,17 @@ let CreateMonth = props =>{
 	let currentDay = props.current.current.format("D");
 
 	let daysThisMonth = [];
-	for(let d=1; d<= days.length; d++){
-		let currentday = d == currentDay?"today":"";
+	
+	for(let d=days.length-1; d>0; d--){
+		let currentday = days[d].day == currentDay?"today":"";
+		let date = days[d].date;
+		console.log(date);
 		daysThisMonth.push(
-				<td key={['thismonth-'+ d]} className={'calendar-body-cell '  + currentday} onClick={() => props.selectDay(d)} >
-					<div className="date">{d}</div>
+				<td key={['thismonth-'+ days[d].day]} className={'calendar-body-cell '  + currentday} onClick={() => props.selectDay(days[d].day)} >
+					<div className="date">{days[d].day}</div>
+					<div className="appts">
+						<ApptsByDay serviceid={serviceid} personid={personid} date={date} />
+					</div>
 				</td>
 		);
 	}
@@ -55,8 +67,7 @@ let CreateMonth = props =>{
 			rows.push(cells);
 		}
 	});
-	
-	console.log(rows);
+
 	
 	let daysinmonth = rows.map((days, index) =>{
 		return (
@@ -78,6 +89,7 @@ let CreateMonth = props =>{
 class Month extends Component{
 
 	days = moment.weekdays();
+	
 	
 	
 	render(){

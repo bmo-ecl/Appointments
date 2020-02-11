@@ -108,3 +108,26 @@
 
 
 
+
+
+
+
+.apptslist-holder{
+	display:table-row;
+}
+
+.al{
+	display:table-cell;
+}
+.al-left{
+	padding:20px;
+	text-align:left;
+}
+
+.al-right{
+	
+}
+
+.apptbyday{
+	margin:5px;
+}

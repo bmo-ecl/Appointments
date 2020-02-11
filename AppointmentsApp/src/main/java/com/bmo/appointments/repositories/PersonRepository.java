@@ -20,5 +20,5 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	
 	Person findByServiceIdAndDni(Long serviceId, String dni);
 	
-	
+	Optional<Person> findById(Long id);
 }	

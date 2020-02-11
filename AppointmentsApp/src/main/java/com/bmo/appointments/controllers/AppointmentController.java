@@ -1,5 +1,8 @@
 package com.bmo.appointments.controllers;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -39,11 +42,43 @@ public class AppointmentController {
 	
 	@GetMapping("/persons/{personId}/appointments")
 	public Page<Appointment> getAppointmentsByPersonId(@PathVariable(value ="personId") Long personId, Pageable pageable){
-		 Page<Appointment> appts = apptRep.findByPersonId(personId, pageable);
+		 Page<Appointment> appts = apptRep.findByPersonId(personId, (short) 2, pageable);
 		 return appts;
 	}
 	
+	@GetMapping("services/{serviceId}/persons/{personId}/appointments")
+	public Page<Appointment> findByServiceIdAndPersonIdAndDate(@PathVariable(value ="serviceId") Long serviceId, @PathVariable(value ="personId") Long personId, 
+			@RequestParam(value="date") String date, Pageable pageable){
+
+		DateTimeFormatter f =DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate d = LocalDate.parse(date, f);
+		
+		 System.out.println("now " + LocalDate.now().toString());
+		 System.out.println("now " + LocalTime.now().toString());
+		 
+		 if(personId == 0) {
+
+			 Page<Appointment> appts = apptRep.findByServiceIdAndDate(serviceId, d, (short) 2, pageable);
+			 return appts;
+		 }else {
+
+			 Page<Appointment> appts = apptRep.findByServiceIdAndPersonIdAndDate(serviceId, personId, d, (short) 2, pageable);
+			
+			 return appts;
+		 }
+		 
+	}
 	
+	@GetMapping("services/{serviceId}/persons/{personId}/allappointments")
+	public Page<Appointment> findByServiceIdAndPersonId(@PathVariable(value ="serviceId") Long serviceId, @PathVariable(value ="personId") Long personId, 
+			Pageable pageable){
+		LocalDate d = LocalDate.now();
+		Page<Appointment> appts = apptRep.findByServiceIdAndPersonId(serviceId, personId, d, (short) 2, pageable);
+		
+		 return appts;
+		 
+	}
+
 	@PostMapping("/services/{serviceId}/persons/{personId}/appointments")
 	public Optional<Appointment> createAppointment( @PathVariable(value="serviceId") Long serviceId, @PathVariable(value="personId") Long personId, @Valid @RequestBody Appointment appt) {
 		Optional<Appointment> result = null;

@@ -133,7 +133,7 @@ class Calendar extends Component{
 
 	render(){
 		
-
+		
 		return(
 
 				<div className="calendar-container">
@@ -171,7 +171,7 @@ class Calendar extends Component{
 					
 					<div className="calendar-body">
 						{ this.state.showDateTable && (
-							<Month current={this.state.dateObject} selectDay={this.selectDay} />
+							<Month current={this.state.dateObject} selectDay={this.selectDay} serviceid={this.props.serviceid} personid={this.props.personid}/>
 						)}	
 					</div>
 				</div>
